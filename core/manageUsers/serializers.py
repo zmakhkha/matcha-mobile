@@ -23,8 +23,22 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 # Login Serializer
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    email = serializers.EmailField(required=False, allow_blank=True)
+    username = serializers.CharField(required=False, allow_blank=True)
     password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        email = data.get('email')
+        username = data.get('username')
+        password = data.get('password')
+
+        if not email and not username:
+            raise serializers.ValidationError("Either 'email' or 'username' must be provided.")
+        if not password:
+            raise serializers.ValidationError("Password is required.")
+
+        return data
+
 
 # Password Reset Serializer
 class PasswordResetSerializer(serializers.Serializer):
