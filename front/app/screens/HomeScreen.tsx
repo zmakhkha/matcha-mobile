@@ -1,16 +1,25 @@
-// app/screens/HomeScreen.tsx
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { FlatList, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Suggested Profiles</Text>
-    </View>
+const HomeScreen = ({ navigation }) => {
+  const users = [
+    { id: '1', name: 'John Doe', photo: 'https://via.placeholder.com/100' },
+    // More user objects
+  ];
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen', { userId: item.id })}>
+      <Image source={{ uri: item.photo }} style={styles.photo} />
+      <Text style={styles.name}>{item.name}</Text>
+    </TouchableOpacity>
   );
-}
+
+  return <FlatList data={users} renderItem={renderItem} keyExtractor={(item) => item.id} />;
+};
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  text: { fontSize: 18, fontWeight: 'bold' }
+  photo: { width: 100, height: 100, borderRadius: 50 },
+  name: { textAlign: 'center', marginTop: 10 },
 });
+
+export default HomeScreen;

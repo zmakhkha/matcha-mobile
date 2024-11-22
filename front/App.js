@@ -1,9 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
 import SplashScreen from './app/screens/SplashScreen';
-import LoginScreen from './app/screens/LoginScreen';
-import RegistrationScreen from './app/screens/RegistrationScreen';
-import ProfileSetupScreen from './app/screens/ProfileSetupScreen';
 
 export default function App() {
   return (
@@ -13,7 +9,8 @@ export default function App() {
     // </View>
     // <LoginScreen/>
     // <RegistrationScreen/>
-    <LoginScreen/>
+    // <LoginScreen/>
+    <SplashScreen/>
     // <ProfileSetupScreen/>
   );
 }
