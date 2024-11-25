@@ -1,25 +1,19 @@
-import { StyleSheet} from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from './app/screens/SplashScreen';
+import HomeScreen from './app/screens/HomeScreen';
+import RegisterScreen from './app/screens/RegisterScreen';
 
-export default function App() {
-  return (
-    // <View style={styles.container}>
-    //   <Text>Open up App.js to start working on your app!</Text>
-    //   <StatusBar style="auto" />
-    // </View>
-    // <LoginScreen/>
-    // <RegistrationScreen/>
-    // <LoginScreen/>
-    <SplashScreen/>
-    // <ProfileSetupScreen/>
-  );
-}
+const Stack = createStackNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => (
+  <NavigationContainer>
+    <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Screen name="SplashScreen" component={SplashScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
+
+export default App;

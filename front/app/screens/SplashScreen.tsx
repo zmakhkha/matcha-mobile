@@ -4,12 +4,15 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     const checkAuth = async () => {
-      // const isAuthenticated = await checkUserAuth(); // Check auth from local storage or backend
-      const isAuthenticated = true;
+      const isAuthenticated = true; // Mock authentication logic
       navigation.replace(isAuthenticated ? 'HomeScreen' : 'RegisterScreen');
     };
-    setTimeout(checkAuth, 3000); 
-  }, []);
+  
+    const timeoutId = setTimeout(checkAuth, 3000); // Call checkAuth after 3 seconds
+  
+    return () => clearTimeout(timeoutId); // Clean up timeout on unmount
+  }, [navigation]);
+  
 
   return (
     <View style={styles.container}>
