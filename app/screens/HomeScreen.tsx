@@ -1,14 +1,44 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import NavBar from '../components/NavBar';  // Adjust path if necessary
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, StyleSheet } from 'react-native';
+import UserCard from '../components/UserCard';
+import NavBar from '../components/NavBar';
+import usersData from '../data/users.json'; // Import the JSON directly
 
-const HomeScreen = () => {
+interface User {
+  id: number;
+  name: string;
+  gender: string;
+  age: number;
+  location: string;
+  platforms: string[];
+  image: string;
+}
+
+const HomeScreen: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    // Simulate an async fetch for testing
+    const fetchUsers = async () => {
+      try {
+        // Replace this with actual API call when moving to production
+        setUsers(usersData); // Directly use the imported data
+      } catch (error) {
+        console.error('Error loading users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text>Welcome to Home Screen!</Text>
-        {/* Add other content here */}
-      </View>
+      <FlatList
+        data={users}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <UserCard user={item} />}
+        contentContainerStyle={styles.list}
+      />
       <NavBar />
     </View>
   );
@@ -17,12 +47,9 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
   },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  list: {
+    paddingBottom: 60, // Add space for the navbar
   },
 });
 
