@@ -6,13 +6,12 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Linking,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Platform {
-  snap?: string;
-  tiktok?: string;
-  insta?: string;
+  [key: string]: string; // Dynamic keys for platforms
 }
 
 interface User {
@@ -30,12 +29,23 @@ interface User {
 }
 
 interface ProfileScreenProps {
-  user: User;
+  route: {
+    params: {
+      user: User;  // Expecting the user object to be passed
+    };
+  };
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ user }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
+  const { user } = route.params; // Extract user from route params
+
   const handlePlatformClick = (platform: string, username: string) => {
-    console.log(`Clicked on ${platform}: ${username}`);
+    const urls: { [key: string]: string } = {
+      Snapchat: `https://www.snapchat.com/add/${username}`,
+      TikTok: `https://www.tiktok.com/@${username}`,
+      Instagram: `https://www.instagram.com/${username}`,
+    };
+    Linking.openURL(urls[platform]);
   };
 
   return (
@@ -53,8 +63,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ user }) => {
 
       {/* Stats */}
       <View style={styles.stats}>
-        <Text style={styles.statText}>{`Visits: ${user.visits}`}</Text>
-        <Text style={styles.statText}>{`Followers: ${user.followers}`}</Text>
+        <Text style={styles.statText}>{`Visits: ${user.visits || 0}`}</Text>
+        <Text style={styles.statText}>{`Followers: ${user.followers || 0}`}</Text>
       </View>
 
       {/* Social Media Platforms */}
@@ -94,11 +104,15 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ user }) => {
       {/* Interests */}
       <Text style={styles.sectionTitle}>Interests</Text>
       <View style={styles.interests}>
-        {user.Interests.map((interest, index) => (
-          <View key={index} style={styles.interestBubble}>
-            <Text style={styles.interestText}>{interest}</Text>
-          </View>
-        ))}
+        {user.Interests?.length > 0 ? (
+          user.Interests.map((interest, index) => (
+            <View key={index} style={styles.interestBubble}>
+              <Text style={styles.interestText}>{interest}</Text>
+            </View>
+          ))
+        ) : (
+          <Text style={styles.noInterests}>No interests added.</Text>
+        )}
       </View>
 
       {/* About Me */}
@@ -183,6 +197,12 @@ const styles = StyleSheet.create({
     color: '#555',
     textAlign: 'center',
     marginVertical: 12,
+  },
+  noInterests: {
+    fontSize: 16,
+    color: '#777',
+    textAlign: 'center',
+    marginVertical: 16,
   },
 });
 

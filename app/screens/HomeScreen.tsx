@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, StyleSheet, Alert } from 'react-native';
-import UserCard from '../components/UserCard'; // Ensure this component is updated
+import { View, FlatList, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; 
+import { StackNavigationProp } from '@react-navigation/stack';  // Import StackNavigationProp
+import UserCard from '../components/UserCard'; 
 import NavBar from '../components/NavBar';
-import usersData from '../data/users.json'; // Simulate imported JSON
+import usersData from '../data/users.json'; 
+
+import { RootStackParamList } from '../navigation/types';  // Import the types for navigation
 
 interface Platform {
   snap?: string;
@@ -16,7 +20,7 @@ interface User {
   gender: string;
   age: number;
   location: string;
-  platforms: Platform[]; // Updated to be an array of platform objects
+  platforms: Platform[];
   image: string;
   visits: number;
   followers: number;
@@ -24,13 +28,17 @@ interface User {
   about: string;
 }
 
+// Type the navigation prop
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
 const HomeScreen: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const navigation = useNavigation<HomeScreenNavigationProp>();  // Use typed navigation
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        setUsers(usersData); // Use the imported JSON directly
+        setUsers(usersData); 
       } catch (error) {
         console.error('Error loading users:', error);
       }
@@ -39,11 +47,9 @@ const HomeScreen: React.FC = () => {
     fetchUsers();
   }, []);
 
-  // Define what happens when a user card is clicked
+  // Handle user press to navigate to ProfileScreen
   const handleUserPress = (user: User) => {
-    // Example: Show an alert with user name and age
-    Alert.alert('User Clicked', `Name: ${user.name}, Age: ${user.age}`);
-    // Alternatively, navigate to another screen or show more details here
+    navigation.navigate('ProfileScreen', { user });
   };
 
   return (

@@ -13,8 +13,8 @@
 		"image": "https://via.placeholder.com/80"
 	  },
 	  {
-		  "id": 1,
-		  "name": "Chris",
+		  "id": 2,
+		  "name": "Brown",
 		  "gender": "Man",
 		  "visits" : 42,
 		  "followers" : 7,
