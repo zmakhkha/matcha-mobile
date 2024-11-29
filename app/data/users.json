@@ -1,21 +1,30 @@
 [
 	{
-	  "id": 1,
-	  "name": "Chris",
-	  "gender": "Man",
-	  "age": 14,
-	  "location": "Dallas, TX",
-	  "platforms": ["snap", "tiktok", "insta"],
-	  "image": "https://via.placeholder.com/80"
-	},
-	{
-	  "id": 2,
-	  "name": "Alex",
-	  "gender": "Woman",
-	  "age": 20,
-	  "location": "New York, NY",
-	  "platforms": ["insta"],
-	  "image": "https://via.placeholder.com/80"
-	}
+		"id": 1,
+		"name": "Chris",
+		"gender": "Man",
+		"visits" : 42,
+		"followers" : 7,
+		"interests" : ["Cooking", "Sculpture", "Art", "Manga"],
+		"about" : "Eloo! here?s some random stuff abt me i love nature, hockey, animes, to draw, and music.",
+		"age": 14,
+		"location": "Dallas, TX",
+		"platforms": [{"snap": "chris"}, {"tiktok": "chris"}, {"insta": "chris"}],
+		"image": "https://via.placeholder.com/80"
+	  },
+	  {
+		  "id": 1,
+		  "name": "Chris",
+		  "gender": "Man",
+		  "visits" : 42,
+		  "followers" : 7,
+		  "interests" : ["Cooking", "Sculpture", "Art", "Manga"],
+		  "about" : "Eloo! here?s some random stuff abt me i love nature, hockey, animes, to draw, and music.",
+		  "age": 14,
+		  "location": "Dallas, TX",
+		  "platforms": [{"snap": "chris"}, {"tiktok": "chris"}, {"insta": "chris"}],
+		  "image": "https://via.placeholder.com/80"
+		}
+		
   ]
   

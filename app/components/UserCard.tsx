@@ -1,81 +1,111 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-// import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { FaTiktok } from 'react-icons/fa';
+
+interface Platform {
+  snap?: string;
+  tiktok?: string;
+  insta?: string;
+}
+
 interface User {
   id: number;
   name: string;
   gender: string;
   age: number;
   location: string;
-  platforms: string[];
+  platforms: Platform[]; // Ensure it's an array of platform objects
   image: string;
+  visits: number;
+  followers: number;
+  interests: string[];
+  about: string;
 }
 
 interface UserCardProps {
   user: User;
+  onPress: () => void;  // Add onPress prop
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user }) => {
+const UserCard: React.FC<UserCardProps> = ({ user, onPress }) => {
+  // Extract platform information
+  const snapAvailable = user.platforms.some((platform) => platform.snap);
+  const tiktokAvailable = user.platforms.some((platform) => platform.tiktok);
+  const instaAvailable = user.platforms.some((platform) => platform.insta);
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity onPress={onPress} style={styles.card}>
       <Image source={{ uri: user.image }} style={styles.image} />
       <View style={styles.details}>
-        <View style={styles.column}>
-          <Text>{`${user.name} • ${user.gender} • ${user.age}`}</Text>
-        </View>
+        <Text style={styles.name}>{`${user.name}, ${user.age}`}</Text>
+        <Text style={styles.info}>{`${user.gender} • ${user.location}`}</Text>
+
+        {/* Social Media Icons */}
         <View style={styles.iconRow}>
-          {user.platforms.includes('snap') && (
-            <MaterialCommunityIcons name="snapchat" size={24} color="#FFFC00" />
+          {snapAvailable && (
+            <MaterialCommunityIcons
+              name="snapchat"
+              size={24}
+              color="#FFFC00"
+              accessibilityLabel="Snapchat"
+            />
           )}
-          {user.platforms.includes('tiktok') && (
-            <MaterialCommunityIcons name="tiktok" size={24} color="black" />
-			// <FaTiktok size={24} color="black" />
+          {tiktokAvailable && (
+            <MaterialCommunityIcons
+              name="tiktok"
+              size={24}
+              color="#000000"
+              accessibilityLabel="TikTok"
+            />
           )}
-          {user.platforms.includes('insta') && (
-            <MaterialCommunityIcons name="instagram" size={24} color="purple" />
+          {instaAvailable && (
+            <MaterialCommunityIcons
+              name="instagram"
+              size={24}
+              color="#E1306C"
+              accessibilityLabel="Instagram"
+            />
           )}
-        </View>
-        <View style={styles.column}>
-          <Text>{user.location}</Text>
         </View>
       </View>
-      <View style={styles.separator} />
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    width: '100%',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
     flexDirection: 'row',
     alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#DDD',
+    backgroundColor: '#FFF',
   },
   image: {
     width: 80,
     height: 80,
-    borderRadius: 10,
-    marginRight: 10,
+    borderRadius: 40,
+    marginRight: 12,
   },
   details: {
     flex: 1,
+    justifyContent: 'center',
   },
-  column: {
-    marginBottom: 5,
+  name: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+  },
+  info: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 8,
   },
   iconRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8, // For spacing between icons (React Native 0.71+)
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#ddd',
-    marginTop: 10,
+    gap: 12,
   },
 });
 

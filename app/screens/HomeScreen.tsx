@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
-import UserCard from '../components/UserCard';
+import { View, FlatList, StyleSheet, Alert } from 'react-native';
+import UserCard from '../components/UserCard'; // Ensure this component is updated
 import NavBar from '../components/NavBar';
-import usersData from '../data/users.json'; // Import the JSON directly
+import usersData from '../data/users.json'; // Simulate imported JSON
+
+interface Platform {
+  snap?: string;
+  tiktok?: string;
+  insta?: string;
+}
 
 interface User {
   id: number;
@@ -10,19 +16,21 @@ interface User {
   gender: string;
   age: number;
   location: string;
-  platforms: string[];
+  platforms: Platform[]; // Updated to be an array of platform objects
   image: string;
+  visits: number;
+  followers: number;
+  interests: string[];
+  about: string;
 }
 
 const HomeScreen: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    // Simulate an async fetch for testing
     const fetchUsers = async () => {
       try {
-        // Replace this with actual API call when moving to production
-        setUsers(usersData); // Directly use the imported data
+        setUsers(usersData); // Use the imported JSON directly
       } catch (error) {
         console.error('Error loading users:', error);
       }
@@ -31,12 +39,21 @@ const HomeScreen: React.FC = () => {
     fetchUsers();
   }, []);
 
+  // Define what happens when a user card is clicked
+  const handleUserPress = (user: User) => {
+    // Example: Show an alert with user name and age
+    Alert.alert('User Clicked', `Name: ${user.name}, Age: ${user.age}`);
+    // Alternatively, navigate to another screen or show more details here
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={users}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <UserCard user={item} />}
+        renderItem={({ item }) => (
+          <UserCard user={item} onPress={() => handleUserPress(item)} />
+        )}
         contentContainerStyle={styles.list}
       />
       <NavBar />
@@ -47,9 +64,11 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5F5F5',
   },
   list: {
-    paddingBottom: 60, // Add space for the navbar
+    paddingBottom: 60,
+    paddingHorizontal: 10,
   },
 });
 
