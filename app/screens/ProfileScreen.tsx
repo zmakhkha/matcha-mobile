@@ -9,6 +9,7 @@ import {
   Linking,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 interface Platform {
   [key: string]: string; // Dynamic keys for platforms
@@ -24,28 +25,59 @@ interface User {
   image: string;
   visits: number;
   followers: number;
-  Interests: string[];
+  interests: string[];
   about: string;
 }
 
 interface ProfileScreenProps {
   route: {
     params: {
-      user: User;  // Expecting the user object to be passed
+      user: User; // Expecting the user object to be passed
     };
   };
 }
-
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
   const { user } = route.params; // Extract user from route params
 
+  // Log interests outside of JSX
+  console.log(user.interests);
+
   const handlePlatformClick = (platform: string, username: string) => {
     const urls: { [key: string]: string } = {
-      Snapchat: `https://www.snapchat.com/add/${username}`,
-      TikTok: `https://www.tiktok.com/@${username}`,
-      Instagram: `https://www.instagram.com/${username}`,
+      snap: `https://www.snapchat.com/add/${username}`,
+      tiktok: `https://www.tiktok.com/@${username}`,
+      insta: `https://www.instagram.com/${username}`,
     };
-    Linking.openURL(urls[platform]);
+
+    if (urls[platform]) {
+      Linking.openURL(urls[platform]);
+    } else {
+      alert('This platform is not supported yet.');
+    }
+  };
+
+  const getPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case 'snap':
+        return (
+          <MaterialCommunityIcons name="snapchat" size={30} color="#FFFC00" />
+        );
+      case 'tiktok':
+        return (
+          <Image
+            source={{
+              uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/TikTok_logo.svg',
+            }}
+            style={styles.tiktokIcon}
+          />
+        );
+      case 'insta':
+        return (
+          <MaterialCommunityIcons name="instagram" size={30} color="#E1306C" />
+        );
+      default:
+        return <FontAwesome5 name="question-circle" size={30} color="#888" />;
+    }
   };
 
   return (
@@ -68,44 +100,23 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
       </View>
 
       {/* Social Media Platforms */}
+      <Text style={styles.sectionTitle}>Social Media</Text>
       <View style={styles.platformIcons}>
-        {user.platforms.snap && (
+        {Object.entries(user.platforms).map(([platform, username]) => (
           <TouchableOpacity
-            onPress={() => handlePlatformClick('Snapchat', user.platforms.snap)}
+            key={platform}
+            onPress={() => handlePlatformClick(platform, username)}
           >
-            <MaterialCommunityIcons name="snapchat" size={30} color="#FFFC00" />
+            {getPlatformIcon(platform)}
           </TouchableOpacity>
-        )}
-        {user.platforms.tiktok && (
-          <TouchableOpacity
-            onPress={() => handlePlatformClick('TikTok', user.platforms.tiktok)}
-          >
-            <Image
-              source={{
-                uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/TikTok_logo.svg',
-              }}
-              style={styles.tiktokIcon}
-            />
-          </TouchableOpacity>
-        )}
-        {user.platforms.insta && (
-          <TouchableOpacity
-            onPress={() => handlePlatformClick('Instagram', user.platforms.insta)}
-          >
-            <MaterialCommunityIcons
-              name="instagram"
-              size={30}
-              color="#E1306C"
-            />
-          </TouchableOpacity>
-        )}
+        ))}
       </View>
 
       {/* Interests */}
       <Text style={styles.sectionTitle}>Interests</Text>
       <View style={styles.interests}>
-        {user.Interests?.length > 0 ? (
-          user.Interests.map((interest, index) => (
+        {user.interests?.length > 0 ? (
+          user.interests.map((interest, index) => (
             <View key={index} style={styles.interestBubble}>
               <Text style={styles.interestText}>{interest}</Text>
             </View>
