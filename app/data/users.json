@@ -14,14 +14,14 @@
 	  },
 	  {
 		  "id": 2,
-		  "name": "Brown",
+		  "name": "Elia Amo",
 		  "gender": "Man",
 		  "visits" : 42,
 		  "followers" : 7,
 		  "interests" : ["Cooking", "Sculpture", "Art", "Manga"],
 		  "about" : "Eloo! here?s some random stuff abt me i love nature, hockey, animes, to draw, and music.",
-		  "age": 14,
-		  "location": "Dallas, TX",
+		  "age": 25,
+		  "location": "Morocco, Oulad Ftata",
 		  "platforms": [{"snap": "chris"}, {"tiktok": "chris"}, {"insta": "chris"}],
 		  "image": "https://via.placeholder.com/80"
 		}
