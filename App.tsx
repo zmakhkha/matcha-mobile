@@ -5,9 +5,11 @@ import SplashScreen from './app/screens/SplashScreen';
 import HomeScreen from './app/screens/HomeScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
 import ProfileScreen from './app/screens/ProfileScreen';
-import { RootStackParamList } from './types'; // Import the types
+import ChatScreen from './app/screens/ChatScreen';
+import SettingsScreen from './app/screens/SettingsScreen';
+import { RootStackParamList } from './types';
 
-const Stack = createStackNavigator<RootStackParamList>(); // Use the defined param list
+const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => (
   <NavigationContainer>
@@ -16,6 +18,8 @@ const App = () => (
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="ChatScreen" component={ChatScreen} />
+      <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );

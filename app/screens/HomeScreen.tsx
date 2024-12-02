@@ -6,7 +6,7 @@ import UserCard from '../components/UserCard';
 import NavBar from '../components/NavBar';
 import usersData from '../data/users.json'; 
 
-import { RootStackParamList } from '../navigation/types';  // Import the types for navigation
+import { RootStackParamList } from '../types';  // Import the types for navigation
 
 interface Platform {
   snap?: string;

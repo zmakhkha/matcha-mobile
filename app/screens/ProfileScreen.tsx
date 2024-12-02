@@ -43,36 +43,30 @@ interface ProfileScreenProps {
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
   const { user } = route.params; // Extract user from route params
 
-const handlePlatformClick = (platform: string) => {
-  // Find the platform object in the platforms array
-  const platformObj = user.platforms.find((p) => Object.keys(p)[0] === platform);
+  const handlePlatformClick = (platform: string) => {
+    // Fetch username dynamically based on the platform
+    const username = user.platforms[platform];
+    const snap = "aaaaa" + username;
+    console.log("snapmadebyme : ", snap);
+    console.log("usernamebyme : ", username);
+    
+    if (!username) {
+      alert(`Username for ${platform} is not available.`);
+      return;
+    }
 
-  // Extract the username from the platform object
-  const username = platformObj ? platformObj[platform] : null;
+    const urls: { [key: string]: string } = {
+      snap: `https://www.snapchat.com/add/${username}`,
+      tiktok: `https://www.tiktok.com/@${username}`,
+      insta: `https://www.instagram.com/${username}`,
+    };
 
-  console.log("usernamebyme : ", username);
-
-  if (!username) {
-    alert(`Username for ${platform} is not available.`);
-    return;
-  }
-
-  // This is where the issue was: ensure username is a string
-  const snap = "aaaaa" + username;  // Correctly concatenating the string
-  console.log("snapmadebyme : ", snap);
-
-  const urls: { [key: string]: string } = {
-    snap: `https://www.snapchat.com/add/${username}`,
-    tiktok: `https://www.tiktok.com/@${username}`,
-    insta: `https://www.instagram.com/${username}`,
+    if (urls[platform]) {
+      Linking.openURL(urls[platform]);
+    } else {
+      alert('This platform is not supported yet.');
+    }
   };
-
-  if (urls[platform]) {
-    Linking.openURL(urls[platform]);
-  } else {
-    alert('This platform is not supported yet.');
-  }
-};
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {

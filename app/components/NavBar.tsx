@@ -1,13 +1,32 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Use Expo's Ionicons or another icon library
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../types';
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const NavBar = () => {
+  const navigation = useNavigation<NavigationProp>();
+
+  // Define tabs with valid screen names and icon names
+  const tabs: { name: keyof RootStackParamList; icon: React.ComponentProps<typeof Ionicons>['name'] }[] = [
+    { name: 'ChatScreen', icon: 'chatbubbles' }, // Use valid Ionicons icon names
+    { name: 'HomeScreen', icon: 'home' },
+    { name: 'SettingsScreen', icon: 'settings' },
+  ];
+
   return (
     <View style={styles.navBar}>
-      <Ionicons name="chatbubbles" size={24} color="black" />
-      <Ionicons name="home" size={24} color="black" />
-      <Ionicons name="settings" size={24} color="black" />
+      {tabs.map(({ name, icon }) => (
+        <TouchableOpacity
+          key={name} // Use `name` as key since it's now a valid keyof RootStackParamList
+          onPress={() => navigation.navigate(name)} // Navigate to the screen
+        >
+          <Ionicons name={icon} size={30} color="black" />
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };
