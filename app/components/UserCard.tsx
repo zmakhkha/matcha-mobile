@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 interface Platform {
   snap?: string;
@@ -51,12 +52,14 @@ const UserCard: React.FC<UserCardProps> = ({ user, onPress }) => {
             />
           )}
           {tiktokAvailable && (
-            <MaterialCommunityIcons
-              name="tiktok"
-              size={24}
-              color="#000000"
-              accessibilityLabel="TikTok"
-            />
+            // <MaterialCommunityIcons
+            //   name="tiktok"
+            //   size={24}
+            //   color="#000000"
+            //   accessibilityLabel="TikTok"
+            // />
+          <FontAwesome5 name="tiktok" size={22} color="#000" />
+
           )}
           {instaAvailable && (
             <MaterialCommunityIcons

@@ -10,9 +10,6 @@ import {
   Linking,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import React from 'react';
-// import { ScrollView, Text, View, Image, TouchableOpacity, Linking, StyleSheet } from 'react-native';
-// import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 
 interface Platform {
   [key: string]: string; // Dynamic keys for platforms
@@ -43,52 +40,95 @@ interface ProfileScreenProps {
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ route }) => {
   const { user } = route.params; // Extract user from route params
 
-  const handlePlatformClick = (platform: string) => {
-    // Fetch username dynamically based on the platform
-    const username = user.platforms[platform];
-    const snap = "aaaaa" + username;
-    console.log("snapmadebyme : ", snap);
-    console.log("usernamebyme : ", username);
-    
+  // Separate handlers for each platform
+  const handleTikTok = (username: string) => {
     if (!username) {
-      alert(`Username for ${platform} is not available.`);
+      alert("Username for TikTok is not available.");
       return;
     }
+    const url = `https://www.tiktok.com/@${username}`;
+    Linking.openURL(url);
+  };
 
-    const urls: { [key: string]: string } = {
-      snap: `https://www.snapchat.com/add/${username}`,
-      tiktok: `https://www.tiktok.com/@${username}`,
-      insta: `https://www.instagram.com/${username}`,
-    };
+  const handleSnapchat = (username: string) => {
+    if (!username) {
+      alert("Username for Snapchat is not available.");
+      return;
+    }
+    const url = `https://www.snapchat.com/add/${username}`;
+    Linking.openURL(url);
+  };
 
-    if (urls[platform]) {
-      Linking.openURL(urls[platform]);
-    } else {
-      alert('This platform is not supported yet.');
+  const handleInstagram = (username: string) => {
+    if (!username) {
+      alert("Username for Instagram is not available.");
+      return;
+    }
+    const url = `https://www.instagram.com/${username}`;
+    Linking.openURL(url);
+  };
+
+  // Generic platform click handler
+  const handlePlatformClick = (platform: string) => {
+    const username = user.platforms[platform];
+    console.log("Selected platform:", platform);
+    console.log("Username value:", username);
+    // const platformLst  = ['tiktok', 'snap', 'insta']
+
+    switch (platform) {
+      case '0':
+        handleSnapchat(username);
+        break;
+        case '1':
+          handleTikTok(username);
+          break;
+      case '2':
+        handleInstagram(username);
+        break;
+      default:
+        alert("This platform is not supported yet.");
     }
   };
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
-      case 'snap':
+      case '0':
         return (
           <MaterialCommunityIcons
             name="snapchat"
             size={24}
-            color="#FFFC00"
+            color="#000"
             accessibilityLabel="Snapchat"
           />
         );
-      case 'tiktok':
+      case '1':
         return (
-          <FontAwesome5 name="tiktok" size={30} color="#000" />
+          // <MaterialCommunityIcons
+          //     name="tiktok"
+          //     size={24}
+          //     color="#000000"
+          //     accessibilityLabel="TikTok"
+          //   />
+          <FontAwesome5 name="tiktok" size={22} color="#000" />
         );
-      case 'insta':
+      case '2':
         return (
-          <MaterialCommunityIcons name="instagram" size={30} color="#E1306C" />
+          <MaterialCommunityIcons
+              name="instagram"
+              size={24}
+              color="#E1306C"
+              accessibilityLabel="Instagram"
+            />
         );
       default:
-        return <FontAwesome5 name="question-circle" size={30} color="#888" />;
+        // return <FontAwesome5 icon="fab fa-snapchat" />
+        // return <FontAwesome5 name="question-circle" size={30} color="#888" />;
+        return <MaterialCommunityIcons
+              name="instagram"
+              size={24}
+              color="#E1306C"
+              accessibilityLabel="Instagram"
+            />
     }
   };
 

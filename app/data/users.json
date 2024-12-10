@@ -14,15 +14,15 @@
 	  },
 	  {
 		  "id": 2,
-		  "name": "Elia Amo",
-		  "gender": "Man",
-		  "visits" : 42,
-		  "followers" : 7,
+		  "name": "Chelsea",
+		  "gender": "Woman",
+		  "visits" : 20,
+		  "followers" : 42,
 		  "interests" : ["Cooking", "Sculpture", "Art", "Manga"],
 		  "about" : "Eloo! here?s some random stuff abt me i love nature, hockey, animes, to draw, and music.",
-		  "age": 25,
+		  "age": 20,
 		  "location": "Morocco, Oulad Ftata",
-		  "platforms": [{"snap": "chris"}, {"tiktok": "chris"}, {"insta": "chris"}],
+		  "platforms": [{"snap": "Chelsea"}, {"tiktok": "chelsea"}, {"insta": "chelsea"}],
 		  "image": "https://via.placeholder.com/80"
 		}
 		

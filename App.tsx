@@ -13,7 +13,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="SplashScreen">
+    <Stack.Navigator  initialRouteName="SplashScreen">
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
